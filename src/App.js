@@ -2,10 +2,11 @@ import logo from "./logo.svg";
 import "./App.css";
 import Nav from "./views/Nav";
 import { useState, useEffect } from "react";
-import Todo from "./views/Todo";
+// import Todo from "./views/Todo";
+import Covid from "./views/Covid";
 
 const App = () => {
-  let [name, setName] = useState("GauMap");
+  let [name] = useState("GauMap");
   const [address, setAddress] = useState();
   const [todos, setTodos] = useState([
     {
@@ -30,8 +31,8 @@ const App = () => {
     },
   ]);
 
-  useEffect(()=>{
-    console.log('run use effect')
+  useEffect(() => {
+    console.log("run use effect");
   }, []);
 
   const handleClick = (event) => {
@@ -63,7 +64,7 @@ const App = () => {
         <Nav />
         <img src={logo} className="App-logo" alt="logo" />
         <h1>Hello world with React and {name}!</h1>
-        <Todo todos={todos} title="All todos" deleteDataTodo={deleteDataTodo} />
+        {/* <Todo todos={todos} title="All todos" deleteDataTodo={deleteDataTodo} />
         <Todo
           todos={todos.filter((item) => item.type === "gaumap")}
           title={`Gau map todos`}
@@ -78,7 +79,8 @@ const App = () => {
           <button type="button" onClick={(event) => handleClick(event)}>
             Click me
           </button>
-        </form>
+        </form> */}
+        <Covid />
       </header>
     </div>
   );
