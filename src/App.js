@@ -4,6 +4,7 @@ import Nav from "./views/Nav";
 import { useState, useEffect } from "react";
 // import Todo from "./views/Todo";
 import Covid from "./views/Covid";
+import { CountDown, NewCountDown } from "./views/CountDown";
 
 const App = () => {
   let [name] = useState("GauMap");
@@ -35,28 +36,28 @@ const App = () => {
     console.log("run use effect");
   }, []);
 
-  const handleClick = (event) => {
-    if (!address) {
-      alert("Empty input");
-      return;
-    }
-    let newTodo = {
-      id: Math.floor(Math.random() * 100000) + 1,
-      title: address,
-      type: "Quyen",
-    };
-    setTodos([...todos, newTodo]);
-    setAddress("");
-  };
-  const handleOnChange = (event) => {
-    setAddress(event.target.value);
-  };
+  // const handleClick = (event) => {
+  //   if (!address) {
+  //     alert("Empty input");
+  //     return;
+  //   }
+  //   let newTodo = {
+  //     id: Math.floor(Math.random() * 100000) + 1,
+  //     title: address,
+  //     type: "Quyen",
+  //   };
+  //   setTodos([...todos, newTodo]);
+  //   setAddress("");
+  // };
+  // const handleOnChange = (event) => {
+  //   setAddress(event.target.value);
+  // };
 
-  const deleteDataTodo = (id) => {
-    let currentTodos = todos;
-    currentTodos = currentTodos.filter((item) => item.id !== id);
-    setTodos(currentTodos);
-  };
+  // const deleteDataTodo = (id) => {
+  //   let currentTodos = todos;
+  //   currentTodos = currentTodos.filter((item) => item.id !== id);
+  //   setTodos(currentTodos);
+  // };
 
   return (
     <div className="App">
@@ -64,6 +65,9 @@ const App = () => {
         <Nav />
         <img src={logo} className="App-logo" alt="logo" />
         <h1>Hello world with React and {name}!</h1>
+        <CountDown />
+        <span>------------------------------</span>
+        <NewCountDown />
         {/* <Todo todos={todos} title="All todos" deleteDataTodo={deleteDataTodo} />
         <Todo
           todos={todos.filter((item) => item.type === "gaumap")}
