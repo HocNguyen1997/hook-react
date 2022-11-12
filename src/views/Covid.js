@@ -4,19 +4,21 @@ import moment from "moment";
 
 const Covid = () => {
   const [dataCovid, setDataCovid] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(async () => {
-    let res = await axios.get(
-      "https://api.covid19api.com/country/vietnam?from=2021-10-01T00:00:00Z&to=2021-10-20T00:00:00Z"
-    );
-    let data = res && res.data ? res.data : [];
-    setDataCovid(data);
-    console.log(">>> check res", res.data);
+    setTimeout(async () => {
+      let res = await axios.get(
+        "https://api.covid19api.com/country/vietnam?from=2021-10-01T00:00:00Z&to=2021-10-20T00:00:00Z"
+      );
+      let data = res && res.data ? res.data : [];
+      setDataCovid(data.reverse());
+      setLoading(false);
+    }, 500);
   }, []);
   return (
     <>
       <h3>Covid 19 tracking in VietName: </h3>
       <table>
-        {console.log("?>>>> check data covid", dataCovid)}
         <thead>
           <tr>
             <th>Date</th>
@@ -27,7 +29,9 @@ const Covid = () => {
           </tr>
         </thead>
         <tbody>
-          {dataCovid && dataCovid.length > 0 &&
+          {loading === false &&
+            dataCovid &&
+            dataCovid.length > 0 &&
             dataCovid.map((item) => {
               return (
                 <tr key={item.ID}>
@@ -39,6 +43,13 @@ const Covid = () => {
                 </tr>
               );
             })}
+          {loading === true && (
+            <tr>
+              <td colSpan={5} style={{ textAlign: "center" }}>
+                Loading...
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </>
