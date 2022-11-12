@@ -1,20 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import moment from "moment";
 
 const Covid = () => {
   const [dataCovid, setDataCovid] = useState([]);
-  const [loading, setLoading] = useState(true);
-  useEffect(async () => {
-    setTimeout(async () => {
-      let res = await axios.get(
-        "https://api.covid19api.com/country/vietnam?from=2021-10-01T00:00:00Z&to=2021-10-20T00:00:00Z"
-      );
-      let data = res && res.data ? res.data : [];
-      setDataCovid(data.reverse());
-      setLoading(false);
-    }, 500);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const fetchMyAPI = useCallback(async () => {
+    let response = await axios.get(
+      "https://api.covid19api.com/country/vietnam?from=2021-10-01T00:00:00Z&to=2021-10-20T00:00:00Z"
+    );
+    let data = response && response.data ? response.data : [];
+    setDataCovid(data.reverse());
   }, []);
+
+  useEffect(() => {
+    try {
+      fetchMyAPI();
+      setIsLoading(false);
+      setIsError(false);
+    } catch (error) {
+      setIsError(true);
+      setIsLoading(false);
+    }
+  }, [fetchMyAPI]);
   return (
     <>
       <h3>Covid 19 tracking in VietName: </h3>
@@ -29,7 +38,8 @@ const Covid = () => {
           </tr>
         </thead>
         <tbody>
-          {loading === false &&
+          {isError === false &&
+            isLoading === false &&
             dataCovid &&
             dataCovid.length > 0 &&
             dataCovid.map((item) => {
@@ -43,10 +53,17 @@ const Covid = () => {
                 </tr>
               );
             })}
-          {loading === true && (
+          {isLoading === true && (
             <tr>
               <td colSpan={5} style={{ textAlign: "center" }}>
-                Loading...
+                isLoading...
+              </td>
+            </tr>
+          )}
+          {isError === true && (
+            <tr>
+              <td colSpan={5} style={{ textAlign: "center" }}>
+                Something wrong...
               </td>
             </tr>
           )}
