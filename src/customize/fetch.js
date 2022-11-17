@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const useFetch = (url) => {
+const useFetch = (url, isCovidData) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -14,7 +14,11 @@ const useFetch = (url) => {
           cancelToken: source.token,
         });
         let data = response && response.data ? response.data : [];
-        setData(data.reverse());
+        if (isCovidData) {
+          setData(data.reverse());
+        } else {
+          setData(data);
+        }
         setIsLoading(false);
         setIsError(false);
       } catch (error) {
