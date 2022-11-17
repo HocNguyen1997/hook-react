@@ -2,8 +2,8 @@ import moment from "moment";
 import useFetch from "../customize/fetch";
 
 const Covid = () => {
-  const today = new Date(new Date().setHours(0, 0, 0, 0));
-  const priorDate = moment().subtract(30, "days");
+  const today = moment().startOf("day");
+  const priorDate = moment().startOf("day").subtract(31, "days");
   const {
     data: dataCovid,
     isLoading,
@@ -13,7 +13,7 @@ const Covid = () => {
   );
   return (
     <>
-      <h3>Covid 19 tracking in VietName: </h3>
+      <h3>Covid 19 tracking in VietNam: </h3>
       <table>
         <thead>
           <tr>

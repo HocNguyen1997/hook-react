@@ -4,6 +4,13 @@ class CountDown extends React.Component {
   state = {
     count: 20,
   };
+
+  componentWillMount() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
+  }
+
   componentDidMount() {
     this.timer = setInterval(() => {
       this.setState({ count: this.state.count - 1 });
@@ -33,6 +40,7 @@ const NewCountDown = () => {
       setCount(count - 1);
     }, 1000);
     return () => {
+      console.log(">>>>>clear");
       clearInterval(timer);
     };
   }, [count]);

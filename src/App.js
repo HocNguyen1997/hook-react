@@ -2,10 +2,10 @@ import logo from "./logo.svg";
 import "./App.css";
 import Nav from "./views/Nav";
 import { useState, useEffect } from "react";
-// import Todo from "./views/Todo";
+import Todo from "./views/Todo";
 import Covid from "./views/Covid";
 import { CountDown, NewCountDown } from "./views/CountDown";
-
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 const App = () => {
   let [name] = useState("GauMap");
   const [address, setAddress] = useState();
@@ -36,57 +36,64 @@ const App = () => {
     console.log("run use effect");
   }, []);
 
-  // const handleClick = (event) => {
-  //   if (!address) {
-  //     alert("Empty input");
-  //     return;
-  //   }
-  //   let newTodo = {
-  //     id: Math.floor(Math.random() * 100000) + 1,
-  //     title: address,
-  //     type: "Quyen",
-  //   };
-  //   setTodos([...todos, newTodo]);
-  //   setAddress("");
-  // };
-  // const handleOnChange = (event) => {
-  //   setAddress(event.target.value);
-  // };
+  const handleClick = (event) => {
+    if (!address) {
+      alert("Empty input");
+      return;
+    }
+    let newTodo = {
+      id: Math.floor(Math.random() * 100000) + 1,
+      title: address,
+      type: "Quyen",
+    };
+    setTodos([...todos, newTodo]);
+    setAddress("");
+  };
+  const handleOnChange = (event) => {
+    setAddress(event.target.value);
+  };
 
-  // const deleteDataTodo = (id) => {
-  //   let currentTodos = todos;
-  //   currentTodos = currentTodos.filter((item) => item.id !== id);
-  //   setTodos(currentTodos);
-  // };
+  const deleteDataTodo = (id) => {
+    let currentTodos = todos;
+    currentTodos = currentTodos.filter((item) => item.id !== id);
+    setTodos(currentTodos);
+  };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <Nav />
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>Hello world with React and {name}!</h1>
-        <CountDown />
-        <span>------------------------------</span>
-        <NewCountDown />
-        {/* <Todo todos={todos} title="All todos" deleteDataTodo={deleteDataTodo} />
-        <Todo
-          todos={todos.filter((item) => item.type === "gaumap")}
-          title={`Gau map todos`}
-          deleteDataTodo={deleteDataTodo}
-        />
-        <input
-          type="text"
-          value={address}
-          onChange={(event) => handleOnChange(event)}
-        ></input>
-        <form>
-          <button type="button" onClick={(event) => handleClick(event)}>
-            Click me
-          </button>
-        </form> */}
-        <Covid />
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <header className="App-header">
+          <Nav />
+          <img src={logo} className="App-logo" alt="logo" />
+        </header>
+
+        <Routes>
+          <Route path="/" element={<Covid />}></Route>
+          <Route path="/timer" element={<NewCountDown />}></Route>
+          <Route
+            path="/todo"
+            element={
+              <div>
+                <Todo
+                  todos={todos.filter((item) => item.type === "gaumap")}
+                  title={`Gau map todos`}
+                  deleteDataTodo={deleteDataTodo}
+                />
+                <input
+                  type="text"
+                  value={address}
+                  onChange={(event) => handleOnChange(event)}
+                ></input>
+
+                <button type="button" onClick={(event) => handleClick(event)}>
+                  Click me
+                </button>
+              </div>
+            }
+          ></Route>
+        </Routes>
+      </div>
+    </Router>
   );
 };
 
