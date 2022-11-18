@@ -6,6 +6,7 @@ import Todo from "./views/Todo";
 import Covid from "./views/Covid";
 import Blog from "./views/Blog";
 import DetailBlog from "./views/DetailBlog";
+import AddNewBlog from "./views/AddNewBlog";
 import { CountDown, NewCountDown } from "./views/CountDown";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 const App = () => {
@@ -74,6 +75,7 @@ const App = () => {
           <Route path="/timer" element={<NewCountDown />}></Route>
           <Route path="/blog" element={<Blog />}></Route>
           <Route path="/blog/:id" element={<DetailBlog />}></Route>
+          <Route path="/add-new-blog" element={<AddNewBlog />}></Route>
           <Route
             path="/todo"
             element={
