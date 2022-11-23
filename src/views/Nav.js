@@ -15,7 +15,7 @@ const Nav = () => {
       <NavLink to="/blog" activeclassname="active">
         Blog Apps
       </NavLink>
-      <NavLink to="/secret" activeclassname="active">
+      <NavLink to="/youtube-search" activeclassname="active">
         Secret
       </NavLink>
     </div>
